@@ -9,6 +9,18 @@ pipeline {
       }
     }
 
+    stage('Docker build'){
+      steps{
+        sh 'docker build -t jenkins-laravel .'
+      }
+    }
+
+    stage('Run test'){
+      steps{
+        sh 'docker run jenkins-laravel ./vendor/bin/phpunit tests'
+      }
+    }
+
     // stage('Sonarqube') {
     //   steps {
     //     script {
