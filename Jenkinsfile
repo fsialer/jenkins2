@@ -1,5 +1,5 @@
 pipeline {
-   //agent { label 'agente1' }
+   //agent { label 'agente1' } //se coloca el agente que qconfiguraste en jenkins
    agent any
 
   stages {
