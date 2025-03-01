@@ -59,10 +59,10 @@ pipeline {
 
   post {
      success {
-       slackSend(channel: '#tutorial', message: "Todo bien")
+       slackSend(channel: '#test-dev', message: "Todo bien")
      }
      failure {
-       slackSend(channel: '#tutorial', message: "Algo anda mal")
+       slackSend(channel: '#test-dev', message: "Algo anda mal")
      }
   }
 }
