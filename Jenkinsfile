@@ -8,6 +8,11 @@ pipeline {
         sh 'docker info'
       }
     }
+    stage('dar permisos'){
+      steps{
+        sh 'chmod +x ./vendor/bin/phpunit'
+      }
+    }
 
     stage('Docker build'){
       steps{
@@ -17,7 +22,7 @@ pipeline {
 
     stage('Run test'){
       steps{
-        sh 'docker run jenkins-laravel ./vendor/bin/phpunit tests'
+        sh 'docker run --rm jenkins-laravel ./vendor/bin/phpunit tests'
       }
     }
 
