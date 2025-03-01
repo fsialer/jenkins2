@@ -1,22 +1,23 @@
 pipeline {
-  agent { label 'agente1' }
+   //agent { label 'agente1' }
+   agent any
 
   stages {
-    stage('Vertificar Docker') {
+    stage('Verificar Docker') {
       steps {
         sh 'docker info'
       }
     }
 
-    stage('Sonarqube') {
-      steps {
-        script {
-          docker.image('sonarsource/sonar-scanner-cli').inside('--network ci-network') {
-            sh 'sonar-scanner'
-          }
-        }
-      }
-    }
+    // stage('Sonarqube') {
+    //   steps {
+    //     script {
+    //       docker.image('sonarsource/sonar-scanner-cli').inside('--network ci-network') {
+    //         sh 'sonar-scanner'
+    //       }
+    //     }
+    //   }
+    // }
 
     // stage('Docker build') {
     //   steps {
