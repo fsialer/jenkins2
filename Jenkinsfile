@@ -30,7 +30,14 @@ pipeline {
        steps {
          script {
            docker.image('sonarsource/sonar-scanner-cli').inside('--network ci-network') {
-             sh 'sonar-scanner'
+             sh '''
+             sonar-scanner\
+              -Dsonar.host.url=http:sonarqube:9000\
+              -Dsonar.projectKey=my-php-app \
+              -Dsonar.sources=src \
+              -Dsonar.login=squ_9beda2e4c9243ea4784f68dea8c3a850b79a868c
+             '''
+
            }
          }
        }
@@ -48,21 +55,21 @@ pipeline {
     //   }
     // }
 
-     stage('Deploy') {
-       steps {
-         sshagent(credentials: ['71a7ee52-1c6a-476a-860f-6070ab4eb875']) {
-           sh './deploy.sh'
-         }
-       }
-     }
+    //  stage('Deploy') {
+    //    steps {
+    //      sshagent(credentials: ['71a7ee52-1c6a-476a-860f-6070ab4eb875']) {
+    //        sh './deploy.sh'
+    //      }
+    //    }
+    //  }
   }
 
   post {
      success {
-       slackSend(channel: '#test-dev', message: "Todo bien")
+       slackSend(channel: '#notifications-jenkins', message: "Todo bien")
      }
      failure {
-       slackSend(channel: '#test-dev', message: "Algo anda mal")
+       slackSend(channel: '#notifications-jenkins', message: "Algo anda mal")
      }
   }
 }
