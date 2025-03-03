@@ -10,6 +10,7 @@ pipeline {
     stage('Verificar Docker') {
       steps {
         sh 'docker info'
+      }
     }
     // stage('dar permisos'){
     //   steps{
@@ -40,7 +41,6 @@ pipeline {
               -Dsonar.sources=src \
               -Dsonar.login=$SONAR_TOKEN
              '''
-
            }
          }
        }
