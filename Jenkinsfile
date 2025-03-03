@@ -32,18 +32,31 @@ pipeline {
 
      stage('Sonarqube') {
        steps {
-         script {
-           docker.image('sonarsource/sonar-scanner-cli').inside('--network ci-network') {
-             sh '''
-             sonar-scanner\
-              -Dsonar.host.url=http:sonarqube:9000\
-              -Dsonar.projectKey=my-php-app \
-              -Dsonar.sources=src \
-              -Dsonar.login=$SONAR_TOKEN
-             '''
-           }
-         }
+        withSonarQubeEnv('docker sonar'){
+          script {
+              docker.image('sonarsource/sonar-scanner-cli').inside('--network ci-network') {
+                sh '''
+                sonar-scanner \
+                  -Dsonar.host.url=http://sonarqube:9000 \
+                  -Dsonar.projectKey=my-php-app \
+                  -Dsonar.sources=src \
+                  -Dsonar.login=$SONAR_TOKEN 
+                '''
+                }
+          }
+        }
        }
+     }
+
+     stage('Deploy'){
+      steps{
+        script{
+          def qg=waitForQualityGate()
+          if(qg.status!='OK'){
+            error "PIPELINE ERROR! ${qg.status}"
+          }
+        }
+      }
      }
 
     // stage('Docker build') {
