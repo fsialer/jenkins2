@@ -57,7 +57,7 @@ pipeline {
             error "PIPELINE ERROR! ${qg.status}"
           }
           if(qg.status=='OK'){
-            error "PIPELINE SUCCESS! ${qg.status}"
+            success "PIPELINE SUCCESS! ${qg.status}"
           }
         }
       }
