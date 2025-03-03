@@ -2,11 +2,14 @@ pipeline {
    //agent { label 'agente1' } //se coloca el agente que qconfiguraste en jenkins
    agent any
 
+   environment{
+    SONAR_TOKEN=credentials('Sonar2')
+   }
+
   stages {
     stage('Verificar Docker') {
       steps {
         sh 'docker info'
-      }
     }
     // stage('dar permisos'){
     //   steps{
@@ -35,7 +38,7 @@ pipeline {
               -Dsonar.host.url=http:sonarqube:9000\
               -Dsonar.projectKey=my-php-app \
               -Dsonar.sources=src \
-              -Dsonar.login=squ_9beda2e4c9243ea4784f68dea8c3a850b79a868c
+              -Dsonar.login=$SONAR_TOKEN
              '''
 
            }
