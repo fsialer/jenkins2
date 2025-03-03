@@ -54,21 +54,21 @@ pipeline {
     //   }
     // }
 
-     stage('Deploy') {
-       steps {
-         sshagent(credentials: ['71a7ee52-1c6a-476a-860f-6070ab4eb875']) {
-           sh './deploy.sh'
-         }
-       }
-     }
+    //  stage('Deploy') {
+    //    steps {
+    //      sshagent(credentials: ['71a7ee52-1c6a-476a-860f-6070ab4eb875']) {
+    //        sh './deploy.sh'
+    //      }
+    //    }
+    //  }
   }
 
   post {
      success {
-       slackSend(channel: '#test-dev', message: "Todo bien")
+       slackSend(channel: '#notifications-jenkins', message: "Todo bien")
      }
      failure {
-       slackSend(channel: '#test-dev', message: "Algo anda mal")
+       slackSend(channel: '#notifications-jenkins', message: "Algo anda mal")
      }
   }
 }
