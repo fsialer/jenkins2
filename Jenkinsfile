@@ -37,7 +37,7 @@ pipeline {
               docker.image('sonarsource/sonar-scanner-cli').inside('--rm --network ci-network') {
                 sh '''
                 sonar-scanner \
-                  -Dsonar.host.url=http:sonarqube:9000 \
+                  -Dsonar.host.url=http://sonarqube:9000 \
                   -Dsonar.projectKey=my-php-app \
                   -Dsonar.sources=src \
                   -Dsonar.login=$SONAR_TOKEN \
@@ -55,9 +55,6 @@ pipeline {
           def qg=waitForQualityGate()
           if(qg.status!='OK'){
             error "PIPELINE ERROR! ${qg.status}"
-          }
-          if(qg.status=='OK'){
-            success "PIPELINE SUCCESS! ${qg.status}"
           }
         }
       }
